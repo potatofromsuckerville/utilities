@@ -1,25 +1,37 @@
 #include <stdio.h>
-#include <stdlib.h>
-
-#define FILE_IN "file.txt"
-#define FILE_OUT "zipped.txt"
 
 int main() {
-    FILE *fileIn = fopen(FILE_IN, "r");
-
-    fseek(fileIn, 0, SEEK_END);
-    size_t fileSize = ftell(fileIn);
-    fseek(fileIn, 0, SEEK_SET);
     
-    char *zipped; 
-    zipped = malloc(fileSize);
+    char *sample = "aaaahhuuukkkffkkgfgg";
+    int count, currChar, prevChar, index;
+    char asciiCount, zipped[25];
+    prevChar = EOF;
+    count = index = 0;
+    int i = 0;
 
-    int ch, i = 0;
-    while ((ch = fgetc(fileIn)) != EOF) {
-        zipped[i++] = (char)ch;
+    while(1) {
+        currChar = sample[i]; 
+        
+        if (i == 0) {
+            prevChar = currChar;
+            i++;
+            count++;
+            continue;
+            }
+        if ((char)currChar == '\0') break;
+        if ((char)currChar == (char)prevChar) {
+            i++;
+            count++;
+            continue;
+            }
+        
+        asciiCount = '0' + count;
+        zipped[index++] = asciiCount;
+        zipped[index++] = currChar;
+        prevChar = currChar;
+        count = 0;
         }
-    //~ zipped[i] = '\0';
-    fclose(fileIn);
+    zipped[index] = '\0';
     printf("%s \n", zipped);
     return 0;
     }
