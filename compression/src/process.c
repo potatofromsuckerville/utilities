@@ -18,7 +18,14 @@ int main() {
             count++;
             continue;
             }
-        if ((char)currChar == '\0') break;
+        if ((char)currChar == '\0') {
+            asciiCount = '0' + count;
+            zipped[index++] = asciiCount;
+            zipped[index++] = prevChar;
+            prevChar = currChar;
+            count = 0;         
+            break;
+            }
         if ((char)currChar == (char)prevChar) {
             i++;
             count++;
@@ -27,7 +34,7 @@ int main() {
         
         asciiCount = '0' + count;
         zipped[index++] = asciiCount;
-        zipped[index++] = currChar;
+        zipped[index++] = prevChar;
         prevChar = currChar;
         count = 0;
         }
