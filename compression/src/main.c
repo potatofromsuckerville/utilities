@@ -64,6 +64,7 @@ int processContent(void) {
     }
     
 int main() {
+    printf("File content manipulation test run... \n");
     processContent();
     return 0;
     }
