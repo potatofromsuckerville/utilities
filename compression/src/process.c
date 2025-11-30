@@ -3,45 +3,35 @@
 
 int main() {
     
-    int currChar, prevChar;
-    char asciiCount[12], zipped[25];
+    FILE *fileIn = fopen("file.txt", "r");
     
-    int count = 0, index = 0;
-    prevChar = EOF;
-    int i = 0;
-
-    char *sample = "aaaaaaaaaabbbbb";
-    
-    while(1) {
-        currChar = sample[i]; 
-        
-        if (i == 0) {
-            prevChar = currChar;
-            i++;
-            count++;  
-            continue;
-            }
-        if ((char)currChar == '\0') {
-            sprintf(asciiCount, "%d", count);
-            strcpy(&zipped[index], asciiCount);
-            index += strlen(asciiCount);
-            zipped[index++]= prevChar;
-            count = 0;         
-            break;
-            }
-        if ((char)currChar == (char)prevChar) {
-            i++;
-            count++;
-            continue;
-            }
-        
-            sprintf(asciiCount, "%d", count);
-            strcpy(&zipped[index], asciiCount);
-            index += strlen(asciiCount);
-            zipped[index++]= prevChar;
-            count = 0;         
+    if (fileIn == NULL) {
+        perror("Could not open file.");
+        return 1;
         }
-    zipped[index] = '\0';
-    printf("%s \n", zipped);
+    
+    size_t fileSize;
+        
+    if (fseek(fileIn, 0, SEEK_END) != 0) {
+        perror("fseek failed.");
+        return 1;
+        }
+    if ((fileSize = ftell(fileIn)) == -1L) {
+        perror("ftell failed");
+        }
+    fseek(fileIn, 0, SEEK_SET);
+    
+    int currChar, prevChar;
+    int count = 0;
+    
+    prevChar = fgetc(fileIn);
+    count++;
+    while(1) {
+        currChar = fgetc(fileIn);
+        break;
+        }
+    printf("%c %c \n", prevChar, currChar);
+    fclose(fileIn);
+    
     return 0;
     }
