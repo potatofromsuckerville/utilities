@@ -1,57 +1,51 @@
 #include <stdio.h>
+#include <string.h>
 
 int main() {
+    char *sample = "aaaaaaaaaabbbbcdde";
+    char strCount[20], zipped[30];
     
-    char *sample = "aaaahhuuukkkffkkgfgg";
-    int count, currChar, prevChar, index;
-    char asciiCount, zipped[25];
-    prevChar = EOF;
-    count = index = 0;
+    int prevChar, currChar;
     int i = 0;
-
-    while(1) {
-        currChar = sample[i]; 
-        
-        if (i == 0) {
-            prevChar = currChar;
-            i++;
-            count++;
-            continue;
-            }
-        if ((char)currChar == '\0') break;
-        if ((char)currChar == (char)prevChar) {
-            i++;
-            count++;
-            continue;
-            }
-        
-        asciiCount = '0' + count;
-        zipped[index++] = asciiCount;
-        zipped[index++] = currChar;
+    int count = 0;
+    int index = 0;
+    
+    if (i == 0) {
+        currChar = sample[i++];
         prevChar = currChar;
-        count = 0;
+        count++;
         }
+        
+    while(1) {
+        currChar = sample[i++];
+        if ((char)currChar == (char)prevChar) {
+            prevChar = currChar;
+            count++;
+            continue;
+            }
+        if ((char)currChar != (char)prevChar && (char)currChar != '\0') {
+            sprintf(strCount, "%d", count);
+            strcpy(&zipped[index], strCount);
+            index += strlen(strCount);
+            zipped[index++] = prevChar;
+            prevChar = currChar;
+            count = 1;
+            continue;
+            }
+        if ((char)currChar == '\0') {
+            sprintf(strCount, "%d", count);
+            strcpy(&zipped[index], strCount);
+            index += strlen(strCount);
+            zipped[index++] = prevChar;
+            prevChar = currChar;
+            count = 1;
+            break;
+            }
+        }
+        
     zipped[index] = '\0';
-    printf("%s \n", zipped);
+    printf("Original string: %s\n", sample);
+    printf("Compressed string: %s\n", zipped);
+    
     return 0;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-//~ #include <stdio.h>
-
-//~ int main() {
-    //~ int num = 5;
-    //~ (char)num = '0' + 67;
-    //~ printf("%c \n", num);
-    //~ return 0;
-    //~ }
