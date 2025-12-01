@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 int main() {
     
@@ -19,18 +20,62 @@ int main() {
     if ((fileSize = ftell(fileIn)) == -1L) {
         perror("ftell failed");
         }
+        
     fseek(fileIn, 0, SEEK_SET);
     
     int currChar, prevChar;
-    int count = 0;
+    char asciiCount[12];
     
+    char *zipped = malloc(fileSize);
+
     prevChar = fgetc(fileIn);
-    count++;
+    int count = 1;
+    int i = 0;
+
+    if (zipped == NULL) {
+        perror("Memory allocation failed.");
+        fclose(fileIn);
+        return 1;
+        }
+    
     while(1) {
         currChar = fgetc(fileIn);
-        break;
+        if (currChar == prevChar) {
+            prevChar = currChar;
+            count++;
+            continue;
+            }
+        if (currChar != prevChar && currChar != EOF) {
+            sprintf(asciiCount, "%d", count);
+            strcpy(&zipped[i++], asciiCount);
+            i += strlen(asciiCount);
+            zipped[i++] = prevChar;
+            prevChar = currChar;
+            count = 1;
+            continue;
+            }
+            
+        if (currChar == EOF) {
+            
+            break;
+            }
         }
-    printf("%c %c \n", prevChar, currChar);
+        
+    zipped[i] = '\0';
+    FILE *fileOut = fopen("zipped.txt", "w");
+    if (fileOut == NULL) {
+        perror("Unable to create zipped file");
+        free(zipped);
+        fclose(fileIn);
+        return 1;
+        }
+        
+    fputs(zipped, fileOut);
+    
+    printf("%s \n", zipped);
+    
+    free(zipped);
+    fclose(fileOut);
     fclose(fileIn);
     
     return 0;
