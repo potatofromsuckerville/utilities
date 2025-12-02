@@ -1,51 +1,25 @@
 #include <stdio.h>
-#include <string.h>
 
-int main() {
-    char *sample = "aaaaaaaaaabbbbcdde";
-    char strCount[20], zipped[30];
+int main(int argc, char* argv[]) {
+    int i;
+    char array[12] = {'\0'};
     
-    int prevChar, currChar;
-    int i = 0;
-    int count = 0;
-    int index = 0;
+    for (i = 0; i < 10; i++) {
+        array[i] = '0' + i;
+        }
+    printf("%s \n", array);
+    printf("%c %d %d \n", array[9], array[10], array[11]);
+    i = 0;
+    printf("%c \n", array[i++]);
+    i = 0;
+    printf("%c \n", array[++i]);
+    printf("%c %d \n", EOF, EOF);
     
-    if (i == 0) {
-        currChar = sample[i++];
-        prevChar = currChar;
-        count++;
+    if (argc < 2) {
+        printf("Usage %s <filename> \n", argv[0]);
+        return 1;
         }
         
-    while(1) {
-        currChar = sample[i++];
-        if ((char)currChar == (char)prevChar) {
-            prevChar = currChar;
-            count++;
-            continue;
-            }
-        if ((char)currChar != (char)prevChar && (char)currChar != '\0') {
-            sprintf(strCount, "%d", count);
-            strcpy(&zipped[index], strCount);
-            index += strlen(strCount);
-            zipped[index++] = prevChar;
-            prevChar = currChar;
-            count = 1;
-            continue;
-            }
-        if ((char)currChar == '\0') {
-            sprintf(strCount, "%d", count);
-            strcpy(&zipped[index], strCount);
-            index += strlen(strCount);
-            zipped[index++] = prevChar;
-            prevChar = currChar;
-            count = 1;
-            break;
-            }
-        }
-        
-    zipped[index] = '\0';
-    printf("Original string: %s\n", sample);
-    printf("Compressed string: %s\n", zipped);
-    
+    printf("Processing file %s \n", argv[1]); 
     return 0;
     }

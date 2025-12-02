@@ -2,9 +2,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-int main() {
+int main(int argc, char* argv[]) {
     
-    FILE *fileIn = fopen("file.txt", "r");
+    if (argc < 2) {
+        printf("Usage: %s <filename> \n", argv[0]);
+        return 1;
+        }
+    FILE *fileIn = fopen(argv[1], "rb");
     
     if (fileIn == NULL) {
         perror("Could not open file.");
@@ -62,7 +66,9 @@ int main() {
         }
         
     zipped[i] = '\0';
-    FILE *fileOut = fopen("zipped.txt", "w");
+    
+    FILE *fileOut = fopen("zipped.txt", "wb");
+    
     if (fileOut == NULL) {
         perror("Unable to create zipped file");
         free(zipped);
@@ -102,7 +108,8 @@ int main() {
         fclose(fileOut);
         return 1;
         }
-    while(fgets(original, sizeof(original), fileIn) != NULL){
+    
+    while (fgets(original, fileSize, fileIn) != NULL){
         printf("%s", original);
         }
     printf(" (%zu bytes)", fileSize);
