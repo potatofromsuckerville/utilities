@@ -1,0 +1,4 @@
+*.o
+*.out
+file.txt
+zipped.txt

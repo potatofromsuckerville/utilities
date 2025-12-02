@@ -1,14 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "../include/process.h"
 
-int main(int argc, char* argv[]) {
+int compress(const char *fileName) {
     
-    if (argc < 2) {
-        printf("Usage: %s <filename> \n", argv[0]);
-        return 1;
-        }
-    FILE *fileIn = fopen(argv[1], "rb");
+    FILE *fileIn = fopen(fileName, "rb");
     
     if (fileIn == NULL) {
         perror("Could not open file.");
@@ -59,10 +56,8 @@ int main(int argc, char* argv[]) {
             continue;
             }
             
-        if (currChar == EOF) {
+        if (currChar == EOF) break;
             
-            break;
-            }
         }
         
     zipped[i] = '\0';
