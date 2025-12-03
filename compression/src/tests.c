@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
         printf("Usage: %s <file_name> \n", argv[0]);
         return 1;
         }
-    FILE *file_in = fopen(argv[1], "rb");
+    FILE *file_in = fopen(argv[1], "r");
     
     if (file_in == NULL) {
         perror("Could not open file.");
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
         i++;
         }
     content[i] = '\0';
-    char *extracted = malloc(fileSize * 3);
+    char *extracted = malloc(fileSize * 5);
     if (extracted == NULL) {
         perror("Memory allocation failed");
         free(content);
@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
         break;
         }
         
-    FILE *file_out = fopen("extracted.txt", "wb");
+    FILE *file_out = fopen("extracted.txt", "w");
     if (file_out == NULL) {
         perror("Could not create file.");
         fclose(file_in);
