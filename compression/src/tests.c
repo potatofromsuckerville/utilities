@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
     
     int i = 0;
     
-    char *content = malloc(fileSize);
+    char *content = malloc(fileSize + 10);
     if (content == NULL) {
         perror("Memory allocation failed.");
         fclose(file_in);
@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
         if (characters != '\0') {
             if (characters >= '0' && characters <= '9') {
                 count *= 10;
-                count += (int)characters;
+                count += (int)characters - '0';
                 i++;
                 continue;
                 }
@@ -70,6 +70,7 @@ int main(int argc, char* argv[]) {
                     index++;
                     }
                 count = 0;
+                i++;
                 continue;                    
                 }            
             }
