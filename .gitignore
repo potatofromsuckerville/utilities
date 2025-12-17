@@ -1,4 +1,11 @@
-*.o
-*.out
-file.txt
-zipped.txt
+compression/src/zipped.txt
+compression/src/extracted.txt
+compression/src/*
+compression/inc/*.gch
+file_copier/copy
+request_parser/parse
+request_parser/reference
+request_parser/test
+request_parser/reference.c
+request_parser/test.c
+
